@@ -3,12 +3,11 @@
 # Core
 python-dotenv>=1.0.0
 
-# Optional: For real Filecoin integration
-# requests>=2.31.0
-# web3>=6.0.0
+# Filecoin/IPFS Integration
+requests>=2.31.0
 
-# Note: This is a demonstration implementation
-# Production would include:
-# - lighthouse-sdk (Filecoin storage)
-# - ipfshttpclient (IPFS integration)
-# - web3 (Base Mainnet interactions)
+# Optional: For enhanced features
+# web3>=6.0.0  # For direct blockchain interactions
+
+# Note: Set LIGHTHOUSE_API_KEY environment variable for real Filecoin uploads
+# Get your key at: https://files.lighthouse.storage

@@ -57,7 +57,8 @@ An AI agent that **automatically archives its own memory** to Filecoin Onchain C
 | Storage | Filecoin Onchain Cloud | Permanent memory |
 | Content Addressing | IPFS CIDs | Verification |
 | On-Chain Identity | ERC-8004 (Base) | Agent identity |
-| Storage SDK | Lighthouse | Filecoin integration |
+| Storage SDK | Lighthouse API | Filecoin integration |
+| HTTP Client | requests | API calls |
 
 ## 📦 Installation
 
