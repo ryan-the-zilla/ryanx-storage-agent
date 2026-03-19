@@ -21,7 +21,15 @@ class MemoryManager:
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or os.getenv("LIGHTHOUSE_API_KEY")
         self.memory_index: List[Dict[str, Any]] = []
-        self.storage_log = "storage_log.json"
+        
+        # Use absolute path in dedicated directory for security
+        storage_dir = os.path.expanduser("~/.ryanx/storage")
+        os.makedirs(storage_dir, mode=0o700, exist_ok=True)
+        self.storage_log = os.path.join(storage_dir, "memory_log.json")
+        
+        # Set restrictive permissions on storage directory
+        os.chmod(storage_dir, 0o700)
+        
         # CRITICAL: Load existing memories on init for cross-session persistence
         self._load_log()
 
@@ -115,10 +123,12 @@ class MemoryManager:
         }
 
     def _persist_log(self):
-        """Persist storage log to disk."""
+        """Persist storage log to disk with secure file permissions."""
         try:
             with open(self.storage_log, "w") as f:
                 json.dump(self.memory_index, f, indent=2)
+            # Set restrictive permissions (owner read/write only)
+            os.chmod(self.storage_log, 0o600)
         except (IOError, json.JSONEncodeError) as e:
             print(f"[RyanX Storage] Warning: Could not save log: {e}")
 

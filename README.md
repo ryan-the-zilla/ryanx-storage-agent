@@ -206,9 +206,22 @@ Key areas for contribution:
 3. Agent framework integrations (LangChain, AutoGen)
 4. Memory compression/summarization
 
-## 📄 License
+## 🔒 Security Note
 
-MIT
+This implementation uses local JSON storage for a dedicated directory (`~/.ryanx/storage/`) with restricted permissions (0o700).
+
+**For Production Use:**
+- Local storage is for demo/development only
+- For production, integrate actual Lighthouse SDK for Filecoin mainnet storage
+- Add encryption for sensitive data before storage
+- Implement proper access controls for multi-user scenarios
+
+**Current Implementation:**
+- Memory data stored in plaintext (acceptable for hackathon demo)
+- File permissions set to 0o700 (owner-only access)
+- No encryption (add for production if storing sensitive data)
+
+See `SECURITY.md` for full security audit results.
 
 ## 🙏 Acknowledgments
 
