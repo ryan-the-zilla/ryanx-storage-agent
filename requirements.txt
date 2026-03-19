@@ -1,0 +1,14 @@
+# RyanX Storage Agent Dependencies
+
+# Core
+python-dotenv>=1.0.0
+
+# Optional: For real Filecoin integration
+# requests>=2.31.0
+# web3>=6.0.0
+
+# Note: This is a demonstration implementation
+# Production would include:
+# - lighthouse-sdk (Filecoin storage)
+# - ipfshttpclient (IPFS integration)
+# - web3 (Base Mainnet interactions)
