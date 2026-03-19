@@ -22,6 +22,8 @@ class MemoryManager:
         self.api_key = api_key or os.getenv("LIGHTHOUSE_API_KEY")
         self.memory_index: List[Dict[str, Any]] = []
         self.storage_log = "storage_log.json"
+        # CRITICAL: Load existing memories on init for cross-session persistence
+        self._load_log()
 
     def save(self, data: Dict[str, Any]) -> str:
         """
@@ -114,14 +116,21 @@ class MemoryManager:
 
     def _persist_log(self):
         """Persist storage log to disk."""
-        with open(self.storage_log, "w") as f:
-            json.dump(self.memory_index, f, indent=2)
+        try:
+            with open(self.storage_log, "w") as f:
+                json.dump(self.memory_index, f, indent=2)
+        except (IOError, json.JSONEncodeError) as e:
+            print(f"[RyanX Storage] Warning: Could not save log: {e}")
 
     def _load_log(self):
         """Load storage log from disk."""
-        if os.path.exists(self.storage_log):
-            with open(self.storage_log, "r") as f:
-                self.memory_index = json.load(f)
+        try:
+            if os.path.exists(self.storage_log):
+                with open(self.storage_log, "r") as f:
+                    self.memory_index = json.load(f)
+        except (IOError, json.JSONDecodeError) as e:
+            print(f"[RyanX Storage] Warning: Could not load log, starting fresh: {e}")
+            self.memory_index = []
 
 
 # Example usage
